@@ -1,0 +1,90 @@
+{
+  "name": "template",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "husky:postinstall": "husky install",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm i && npm start",
+    "generate:icons": "node scripts/generate-icons.js",
+    "generate:images": "node scripts/generate-images.js",
+    "generate:component": "npx generate-react-cli component",
+    "generate:page": "npx generate-react-cli component --type=page",
+    "update:check": "npm outdated",
+    "update:single": "npm up",
+    "update": "npm update",
+    "code:check": "prettier --check \"src/**/*.{ts,tsx,js,css,scss,html,json}\"",
+    "code:format": "prettier --write \"src/**/*.{ts,tsx,js,css,scss,html,json}\"",
+    "code:format:specific-file": "prettier --write",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@hookform/resolvers": "^2.9.7",
+    "@mui/icons-material": "^5.10.2",
+    "@mui/material": "^5.10.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.56",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "axios": "^0.27.2",
+    "classnames": "^2.3.1",
+    "lodash.isempty": "^4.4.0",
+    "mobx": "^6.6.1",
+    "mobx-react": "^7.5.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.34.2",
+    "react-router-dom": "^6.3.0",
+    "react-spinners": "^0.13.4",
+    "styled-components": "^5.3.5",
+    "typescript": "^4.8.2",
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/lodash.isempty": "^4.4.7",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/styled-components": "^5.1.26",
+    "@types/yup": "^0.32.0",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "generate-react-cli": "^7.2.0",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "react-scripts": "^5.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  }
+}

@@ -1,0 +1,55 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"jest": true
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
+	"extends": [
+		"eslint:recommended",
+		"react-app",
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 12,
+		"sourceType": "module",
+		"project": "./tsconfig.json"
+	},
+	"plugins": [
+		"react",
+		"@typescript-eslint",
+		"simple-import-sort"
+	],
+	"rules": {
+		"react/react-in-jsx-scope": "off",
+		"react/prop-types": "warn",
+		"react/jsx-props-no-spreading": "warn",
+		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/no-explicit-any": "warn",
+		"@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+		"quotes": [
+			"error",
+			"single"
+		],
+		"@typescript-eslint/quotes": [
+			"error",
+			"single"
+		],
+		"semi": [
+			"error",
+			"never"
+		],
+		"import/prefer-default-export": "off",
+		"simple-import-sort/imports": "warn",
+		"simple-import-sort/exports": "warn"
+	}
+}
