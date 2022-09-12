@@ -1,12 +1,8 @@
-import generateNFTs from 'lib/helpers/generateNFTs'
 import { FC, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { H1 } from 'styles'
 
 const Home: FC = () => {
-  useEffect(() => {
-    generateNFTs()
-  }, [])
   
   return (
     <div className="home">
