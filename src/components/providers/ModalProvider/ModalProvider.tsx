@@ -1,11 +1,11 @@
 import { Modal } from 'components/ui'
 import { ModalBackdrop } from 'components/ui/Modal/styles'
 import useEventListener from 'lib/hooks/useEventListener'
-import globalStore from 'lib/stores/global.store'
-import { observer } from 'mobx-react'
-import { ModalType } from 'models/Modal'
 import { FC, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { useAppDispatch, useAppSelector } from 'store/app/hooks'
+import { removeModal } from 'store/features/globalSlice'
+import { ModalType } from 'store/models/Modal'
 import { useLoadingSelector } from 'utils/useLoadingSelector'
 import useMountTransition from 'utils/useMountTransition'
 
@@ -20,37 +20,27 @@ const ModalProvider: FC<ModalProviderProps> = ({ children, transitionDuration = 
     'keydown',
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        globalStore.removeModal()
+        dispatch(removeModal())
       }
     },
     document,
   )
 
-  const modal = globalStore.modal
+  const dispatch = useAppDispatch()
+
+  const modal = useAppSelector((state) => state.global.modal)
   const open = !!modal
 
   const shouldRender = useMountTransition(open, transitionDuration)
 
   const loading = useLoadingSelector({
-    actionType: modal?.loadingAction ?? '',
+    actionType: modal?.loadingAction,
   })
 
   const showModalType = () => {
     switch (modal?.type) {
-      case ModalType.CONFIRMATION:
-        return <Modal {...modal} />
       case ModalType.SUCCESS:
-        return (
-          <>
-            <Modal {...modal} />
-          </>
-        )
-      case ModalType.PROFILE:
-        return <Modal {...modal}>Profile</Modal>
-      case ModalType.CHANGE_PASSWORD:
-        return <Modal {...modal}>Change password</Modal>
-      case ModalType.CHANGE_AVATAR:
-        return <Modal {...modal}>Change avatar</Modal>
+        return <Modal {...modal}>Success Modal</Modal>
       default:
         return null
     }
@@ -63,7 +53,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children, transitionDuration = 
         createPortal(
           <>
             <ModalBackdrop
-              onClick={loading || modal?.disableBackdropClose ? undefined : () => globalStore.removeModal()}
+              onClick={loading || modal?.disableBackdropClose ? undefined : () => dispatch(removeModal())}
             ></ModalBackdrop>
             {showModalType()}
           </>,
@@ -73,4 +63,4 @@ const ModalProvider: FC<ModalProviderProps> = ({ children, transitionDuration = 
   )
 }
 
-export default observer(ModalProvider)
+export default ModalProvider

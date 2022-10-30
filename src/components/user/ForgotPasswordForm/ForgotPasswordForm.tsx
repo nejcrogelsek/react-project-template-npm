@@ -1,36 +1,28 @@
 import * as API from 'api/Api'
 import { Button, Input, Link } from 'components/ui'
 import { useForgotPasswordForm } from 'lib/hooks/react-hook-form/useForgotPasswordForm'
-import globalStore from 'lib/stores/global.store'
-import { observer } from 'mobx-react'
 import { FC } from 'react'
+import { useAppSelector } from 'store/app/hooks'
 import { Form, FormFeedback, FormGroup, Label } from 'styles'
-import { Snackbar } from 'utils/snackbar'
 
 const ForgotPasswordForm: FC = () => {
+  const loading = useAppSelector((state) => state.global.globalLoading)
   const { errors, handleSubmit, register, reset } = useForgotPasswordForm()
 
   const onSubmit = handleSubmit(async (data) => {
-    globalStore.setGlobalLoading({ payload: true })
-    const res = await API.forgotPassword(data)
-    globalStore.setGlobalLoading({ payload: false })
-    if (res.error) {
-      Snackbar.error(res.message)
-    } else {
-      Snackbar.success(res)
-      reset()
-    }
+    console.log(data)
+    //await API.forgotPassword(data)
   })
 
   return (
-    <Form role='form' onSubmit={onSubmit}>
+    <Form role="form" onSubmit={onSubmit}>
       <FormGroup>
         <Label htmlFor="email">Email</Label>
         <Input type="email" id="email" placeholder="example@gmail.com" register={register} />
         {errors.email && <FormFeedback>{errors.email.message}</FormFeedback>}
       </FormGroup>
       <FormGroup>
-        <Button texttransform="uppercase" size="full" type="submit" disabled={globalStore.globalLoading ? true : false}>
+        <Button texttransform="uppercase" size="full" type="submit" disabled={loading ? true : false}>
           Submit
         </Button>
       </FormGroup>
@@ -43,4 +35,4 @@ const ForgotPasswordForm: FC = () => {
   )
 }
 
-export default observer(ForgotPasswordForm)
+export default ForgotPasswordForm

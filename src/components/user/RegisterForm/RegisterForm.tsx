@@ -3,11 +3,8 @@ import { Button, Input, Link, PasswordInput } from 'components/ui'
 import Avatar from 'components/ui/Avatar/Avatar'
 import { fileSelected } from 'lib/helpers/fileSelected'
 import { useRegisterForm } from 'lib/hooks/react-hook-form/useRegisterForm'
-import globalStore from 'lib/stores/global.store'
-import { observer } from 'mobx-react'
 import { FC, useEffect, useState } from 'react'
 import { Col, Form, FormFeedback, FormGroup, Label, P, Row } from 'styles'
-import { Snackbar } from 'utils/snackbar'
 
 const RegisterForm: FC = () => {
   const { errors, handleSubmit, register, reset } = useRegisterForm()
@@ -18,25 +15,7 @@ const RegisterForm: FC = () => {
   const onSubmit = handleSubmit(async (dataset) => {
     if (file) {
       console.log(dataset)
-      globalStore.setGlobalLoading({ payload: true })
-      const { url }: API.UrlResponse = await API.generateUploadUrl()
-      await API.uploadImage(url, file)
-      const res = await API.register({
-        email: dataset.email,
-        first_name: dataset.first_name,
-        last_name: dataset.last_name,
-        password: dataset.password,
-        confirm_password: dataset.confirm_password,
-        profile_image: url,
-      })
-      globalStore.setGlobalLoading({ payload: false })
-      if (res.error) {
-        Snackbar.error(res.message)
-      } else {
-        Snackbar.success(res)
-        setFile(null)
-        reset()
-      }
+
       setFileError(false)
     } else {
       setFileError(true)
@@ -124,4 +103,4 @@ const RegisterForm: FC = () => {
   )
 }
 
-export default observer(RegisterForm)
+export default RegisterForm

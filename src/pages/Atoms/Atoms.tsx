@@ -1,31 +1,103 @@
-import { observer } from 'mobx-react'
 import { FC } from 'react'
-import { openConfirmationModal, openProfileModal, openSuccessModal } from 'utils/modal'
-import { Snackbar } from 'utils/snackbar'
+import { useAppDispatch, useAppSelector } from 'store/app/hooks'
+import { addModal, addSnackbar, removeModal } from 'store/features/globalSlice'
+import { ModalType } from 'store/models/Modal'
+import { SnackbarType } from 'store/models/Snackbar'
 
 const Atoms: FC = () => {
+  const snackbars = useAppSelector((state) => state.global.snackbars)
+  const dispatch = useAppDispatch()
+
   return (
     <div className="atoms">
       <h1>Modals</h1>
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <button onClick={() => openConfirmationModal()}>Open confirmation modal</button>
-        <button onClick={openSuccessModal}>Open on success modal</button>
-        <button onClick={openProfileModal}>Open profile modal</button>
+        <button
+          onClick={() =>
+            dispatch(
+              addModal({
+                type: ModalType.SUCCESS,
+                title: 'Title Here',
+                body: 'Body Here',
+                subtitle: 'Subtitle Here',
+                primaryAction: () =>
+                  dispatch(
+                    addModal({
+                      type: ModalType.SUCCESS,
+                      title: 'Success',
+                      body: 'Body Here',
+                      primaryAction: () => dispatch(removeModal()),
+                    }),
+                  ),
+                secondaryAction: () => dispatch(removeModal()),
+              }),
+            )
+          }
+        >
+          Open modal
+        </button>
       </div>
       <h1>Snackbars</h1>
       <div>
-        <button onClick={() => Snackbar.success('Check your inbox and verify your account, before logging in.')}>
+        <button
+          onClick={() =>
+            dispatch(
+              addSnackbar({
+                id: `success-${snackbars.length}`,
+                type: SnackbarType.SUCCESS,
+                body: 'This is body or description.',
+                title: 'Success!',
+              }),
+            )
+          }
+        >
           Success
         </button>
-        <button onClick={() => Snackbar.warning('Warning! Dej poglej malo.')}>Warning</button>
-        <button onClick={() => Snackbar.error('Something went wrong.')}>Error</button>
-        <button onClick={() => Snackbar.info('This is some information.')}>Info</button>
-      </div>
-      <div style={{ fontSize: '44px', backgroundColor: 'red', width: '100%', position: 'relative', zIndex: 2 }}>
-        OTHER CONTENT
+        <button
+          onClick={() =>
+            dispatch(
+              addSnackbar({
+                id: `warning-${snackbars.length}`,
+                type: SnackbarType.WARNING,
+                title: 'Warning!',
+                close: true,
+              }),
+            )
+          }
+        >
+          Watning
+        </button>
+        <button
+          onClick={() =>
+            dispatch(
+              addSnackbar({
+                id: `error-${snackbars.length}`,
+                type: SnackbarType.ERROR,
+                body: 'Something went wrong..',
+                title: 'Ups!',
+                close: true,
+              }),
+            )
+          }
+        >
+          Error
+        </button>
+        <button
+          onClick={() =>
+            dispatch(
+              addSnackbar({
+                id: `info-${snackbars.length}`,
+                type: SnackbarType.INFO,
+                body: 'This is body or description.',
+              }),
+            )
+          }
+        >
+          Success
+        </button>
       </div>
     </div>
   )
 }
 
-export default observer(Atoms)
+export default Atoms

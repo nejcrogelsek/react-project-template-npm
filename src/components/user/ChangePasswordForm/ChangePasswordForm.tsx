@@ -1,31 +1,22 @@
 import * as API from 'api/Api'
 import { Button, PasswordInput } from 'components/ui'
 import { useChangePasswordForm } from 'lib/hooks/react-hook-form/useChangePasswordForm'
-import authStore from 'lib/stores/auth.store'
-import globalStore from 'lib/stores/global.store'
-import { observer } from 'mobx-react'
 import { FC } from 'react'
+import { useAppDispatch } from 'store/app/hooks'
+import { removeModal } from 'store/features/globalSlice'
 import { Col, Form, FormFeedback, FormGroup, Row } from 'styles'
-import { openProfileModal, openUpdateSuccessModal } from 'utils/modal'
-import { Snackbar } from 'utils/snackbar'
 
 const ChangePasswordForm: FC = () => {
+  const dispatch = useAppDispatch()
   const { errors, handleSubmit, register, reset } = useChangePasswordForm()
 
   const onSubmit = handleSubmit(async (data) => {
-    globalStore.setGlobalLoading({ payload: true })
-    const res = await API.updateUser(data, authStore.user?.id as string)
-    globalStore.setGlobalLoading({ payload: false })
-    if (res.error) {
-      Snackbar.error(res.message)
-    } else {
-      reset()
-      openUpdateSuccessModal()
-    }
+    console.log(data)
+    //const res = await API.updateUser(data, authStore.user?.id as string)
   })
 
   return (
-    <Form role='form' onSubmit={onSubmit}>
+    <Form role="form" onSubmit={onSubmit}>
       <FormGroup>
         <PasswordInput id="password" register={register} label="Password" />
         {errors.password && <FormFeedback>{errors.password.message}</FormFeedback>}
@@ -44,7 +35,7 @@ const ChangePasswordForm: FC = () => {
             Submit
           </Button>
         </Col>
-        <Button className="link" type="button" onClick={openProfileModal}>
+        <Button className="link" type="button" onClick={() => dispatch(removeModal())}>
           Cancel
         </Button>
       </Row>
@@ -52,4 +43,4 @@ const ChangePasswordForm: FC = () => {
   )
 }
 
-export default observer(ChangePasswordForm)
+export default ChangePasswordForm

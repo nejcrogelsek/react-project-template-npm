@@ -1,13 +1,16 @@
 import * as API from 'api/Api'
 import { useRouter } from 'lib/hooks/useRouter'
-import globalStore from 'lib/stores/global.store'
 import { FC } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { Snackbar } from 'utils/snackbar'
+import { useAppDispatch, useAppSelector } from 'store/app/hooks'
+import { addSnackbar, setGlobalLoading } from 'store/features/globalSlice'
+import { SnackbarType } from 'store/models/Snackbar'
 
 import { ErrorPage } from './styles'
 
 const Error: FC = () => {
+  const snackbars = useAppSelector((state) => state.global.snackbars)
+  const dispatch = useAppDispatch()
   const { navigate } = useRouter()
   const [searchParams] = useSearchParams()
 
@@ -19,11 +22,17 @@ const Error: FC = () => {
   const token = searchParams.get('token')?.replaceAll('"', '')
 
   const resendEmailVerification = async () => {
-    globalStore.setGlobalLoading({ payload: true })
+    dispatch(setGlobalLoading(true))
     const res = await API.resendEmailVerification(token as string)
-    globalStore.setGlobalLoading({ payload: false })
+    dispatch(setGlobalLoading(true))
     if (res.error) {
-      Snackbar.error(res.message)
+      dispatch(
+        addSnackbar({
+          id: `error-${snackbars.length}`,
+          type: SnackbarType.ERROR,
+          title: res.message,
+        }),
+      )
     } else {
       navigate('/', { state: { onSuccess: 'Check your inbox and verify your account.' } })
     }

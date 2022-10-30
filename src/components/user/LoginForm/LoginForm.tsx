@@ -3,15 +3,17 @@ import { Button, Input, Link } from 'components/ui'
 import PasswordInput from 'components/ui/PasswordInput/PasswordInput'
 import { useLoginForm } from 'lib/hooks/react-hook-form/useLoginForm'
 import { useRouter } from 'lib/hooks/useRouter'
-import authStore from 'lib/stores/auth.store'
-import globalStore from 'lib/stores/global.store'
-import { observer } from 'mobx-react'
 import { FC, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from 'store/app/hooks'
+import { addSnackbar, setGlobalLoading } from 'store/features/globalSlice'
+import { SnackbarType } from 'store/models/Snackbar'
 import { Form, FormFeedback, FormGroup, Label, P } from 'styles'
-import { Snackbar } from 'utils/snackbar'
 
 const LoginForm: FC = () => {
+  const loading = useAppSelector((state) => state.global.globalLoading)
+  const snackbars = useAppSelector((state) => state.global.snackbars)
+  const dispatch = useAppDispatch()
   const { navigate } = useRouter()
   const { errors, handleSubmit, register, reset } = useLoginForm()
   const [searchParams] = useSearchParams()
@@ -19,21 +21,19 @@ const LoginForm: FC = () => {
   message.current = searchParams.get('message')?.replaceAll('"', '')
 
   const onSubmit = handleSubmit(async (data) => {
-    globalStore.setGlobalLoading({ payload: true })
-    const res = await API.login(data)
-    globalStore.setGlobalLoading({ payload: false })
-    if (res.error) {
-      Snackbar.error(res.message)
-    } else {
-      authStore.login(res)
-      reset()
-      navigate('/my-profile')
-    }
+    dispatch(setGlobalLoading(true))
+    console.log(data)
   })
 
   useEffect(() => {
     if (message.current) {
-      Snackbar.success(message.current as string)
+      dispatch(
+        addSnackbar({
+          id: `success-${snackbars.length}`,
+          type: SnackbarType.SUCCESS,
+          title: message.current as string,
+        }),
+      )
     }
   }, [])
 
@@ -49,7 +49,7 @@ const LoginForm: FC = () => {
         {errors.password && <FormFeedback>{errors.password.message}</FormFeedback>}
       </FormGroup>
       <FormGroup>
-        <Button texttransform="uppercase" size="full" type="submit" disabled={globalStore.globalLoading ? true : false}>
+        <Button texttransform="uppercase" size="full" type="submit" disabled={loading ? true : false}>
           Sign in
         </Button>
       </FormGroup>
@@ -70,4 +70,4 @@ const LoginForm: FC = () => {
   )
 }
 
-export default observer(LoginForm)
+export default LoginForm

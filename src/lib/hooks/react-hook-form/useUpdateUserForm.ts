@@ -1,9 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import authStore from 'lib/stores/auth.store'
 import { useForm } from 'react-hook-form'
+import { useAppSelector } from 'store/app/hooks'
 import * as Yup from 'yup'
 
 export const useUpdateUserForm = () => {
+  const user = useAppSelector((state) => state.auth.user)
   const UpdateUserSchema = Yup.object().shape({
     email: Yup.string().email('Please enter a valid email!').required('Email is required'),
     first_name: Yup.string().required('First name is required'),
@@ -17,11 +18,11 @@ export const useUpdateUserForm = () => {
     reset,
   } = useForm({
     defaultValues: {
-      email: authStore.user?.email ?? '',
-      first_name: authStore.user?.first_name ?? '',
-      last_name: authStore.user?.last_name ?? '',
+      email: user?.email ?? '',
+      first_name: user?.first_name ?? '',
+      last_name: user?.last_name ?? '',
     },
-    mode: 'onBlur',
+    mode: 'onSubmit',
     resolver: yupResolver(UpdateUserSchema),
   })
 

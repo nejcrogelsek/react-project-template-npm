@@ -26,6 +26,7 @@ export interface User {
   last_name: string
   full_name: string
   profile_image: string
+  token?: string | null
 }
 
 export const register = async (data: RegisterInput) => apiRequest<RegisterInput, void>('post', 'auth/register', data)

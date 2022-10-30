@@ -1,9 +1,10 @@
 export interface Snackbar {
   id: string
-  actionId?: string
+  title?: string
+  body?: string
   type: SnackbarType
-  theme: SnackbarColor
-  title: string
+  actionId?: string
+  close?: boolean
 }
 
 export enum SnackbarType {

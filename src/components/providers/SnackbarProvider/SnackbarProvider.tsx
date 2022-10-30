@@ -1,9 +1,8 @@
 import { SnackbarProvider as SnackbarProviderContainer } from 'components/providers/SnackbarProvider/styles'
 import Snackbar from 'components/ui/Snackbar/Snackbar'
-import globalStore from 'lib/stores/global.store'
-import { observer } from 'mobx-react'
 import { FC, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { useAppSelector } from 'store/app/hooks'
 
 interface SnackbarPosition {
   vertical: 'top' | 'center' | 'bottom'
@@ -23,7 +22,7 @@ const SnackbarProvider: FC<SnackbarProviderProps> = ({
   position = { vertical: 'top', horizontal: 'right' },
   transitionDuration = 300,
 }) => {
-  const snackbars = globalStore.snackbars
+  const snackbars = useAppSelector((state) => state.global.snackbars)
 
   const getFlexPosition = (pos: string) => {
     switch (pos) {
@@ -67,4 +66,4 @@ const SnackbarProvider: FC<SnackbarProviderProps> = ({
   )
 }
 
-export default observer(SnackbarProvider)
+export default SnackbarProvider

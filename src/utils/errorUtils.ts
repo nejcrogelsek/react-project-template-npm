@@ -1,5 +1,5 @@
 import isEmpty from 'lodash.isempty'
-import { ApiError } from 'models/Action'
+import { ApiError } from 'store/models/Action'
 
 export const getErrors = <T>(error: string | string[]): ApiError<T> | null => {
   const errors = {} as ApiError<T>

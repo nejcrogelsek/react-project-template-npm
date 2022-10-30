@@ -1,8 +1,10 @@
-import { observer } from 'mobx-react'
-import { Snackbar as ISnackbar, SnackbarColor, SnackbarType } from 'models/Snackbar'
 import { FC, useEffect, useRef, useState } from 'react'
+import { useAppDispatch } from 'store/app/hooks'
+import { removeSnackbar } from 'store/features/globalSlice'
+import { Snackbar as ISnackbar, SnackbarColor, SnackbarType } from 'store/models/Snackbar'
 import useMountTransition from 'utils/useMountTransition'
 
+import Icon from '../Icon/Icon'
 import { SnackbarContainer } from './styles'
 
 const snackbarDelay = 5000
@@ -15,6 +17,7 @@ export interface SnackbarProps {
 }
 
 const Snackbar: FC<SnackbarProps> = ({ snackbar, animationFrom = 'none', className, transitionDuration }) => {
+  const dispatch = useAppDispatch()
   const timer = useRef<any>(null)
 
   const [open, setOpen] = useState(true)
@@ -64,6 +67,8 @@ const Snackbar: FC<SnackbarProps> = ({ snackbar, animationFrom = 'none', classNa
         return SnackbarColor.ERROR
       case SnackbarType.INFO:
         return SnackbarColor.INFO
+      default:
+        return SnackbarColor.INFO
     }
   }
 
@@ -81,7 +86,15 @@ const Snackbar: FC<SnackbarProps> = ({ snackbar, animationFrom = 'none', classNa
           onMouseLeave={onMouseLeave}
         >
           {/* Snackbar content */}
+          {snackbar?.close && (
+            <Icon className="close" icon="close" onClick={() => dispatch(removeSnackbar(snackbar.id))} />
+          )}
           {snackbar?.title}
+          {snackbar?.body && (
+            <span style={snackbar?.title ? { marginTop: '0.5rem' } : { marginTop: '0' }} className="body">
+              {snackbar.body}
+            </span>
+          )}
           <div className="progress-line"></div>
         </SnackbarContainer>
       )}
@@ -89,4 +102,4 @@ const Snackbar: FC<SnackbarProps> = ({ snackbar, animationFrom = 'none', classNa
   )
 }
 
-export default observer(Snackbar)
+export default Snackbar

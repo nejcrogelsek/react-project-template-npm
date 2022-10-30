@@ -1,8 +1,7 @@
-import globalStore from 'lib/stores/global.store'
-import { observer } from 'mobx-react'
 import { FC, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { RingLoader } from 'react-spinners'
+import { useAppSelector } from 'store/app/hooks'
 import useMountTransition from 'utils/useMountTransition'
 
 import { Backdrop } from './styles'
@@ -14,7 +13,7 @@ interface LoadingProviderProps {
 }
 
 const LoadingProvider: FC<LoadingProviderProps> = ({ transitionDuration = 300, loading: forceLoading, children }) => {
-  const loading = globalStore.globalLoading
+  const loading = useAppSelector((state) => state.global.globalLoading)
 
   const shouldRender = useMountTransition(forceLoading || loading, transitionDuration)
 
@@ -32,4 +31,4 @@ const LoadingProvider: FC<LoadingProviderProps> = ({ transitionDuration = 300, l
   )
 }
 
-export default observer(LoadingProvider)
+export default LoadingProvider

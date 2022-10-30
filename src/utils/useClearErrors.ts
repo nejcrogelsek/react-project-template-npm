@@ -1,14 +1,16 @@
-import globalStore from 'lib/stores/global.store'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router'
+import { useAppDispatch, useAppSelector } from 'store/app/hooks'
+import { removeError } from 'store/features/globalSlice'
 
 const useClearErrors = () => {
-  const { errorActions } = globalStore
+  const dispatch = useAppDispatch()
+  const errorActions = useAppSelector((state) => state.global.errorActions)
   const { pathname } = useLocation()
 
   const removeErrors = () => {
     errorActions.forEach((error) => {
-      globalStore.removeError({ payload: error })
+      dispatch(removeError(error))
     })
   }
 

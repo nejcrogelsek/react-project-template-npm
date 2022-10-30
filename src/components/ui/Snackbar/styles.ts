@@ -11,8 +11,22 @@ export const SnackbarContainer = styled.div`
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   color: white;
-  padding: 1rem;
+  padding: 1.2rem;
   overflow: hidden;
+  > .title {
+    font-size: 16px;
+  }
+  > .body {
+    display: block;
+    font-size: 14px;
+  }
+  > .Icon.close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 24px;
+    height: 24px;
+  }
   .progress-line {
     position: absolute;
     bottom: 0;

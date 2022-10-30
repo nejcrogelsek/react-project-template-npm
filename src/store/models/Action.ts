@@ -1,6 +1,6 @@
 export interface LoadingAction {
   id?: string
-  actionType: string
+  actionType: string | undefined
 }
 
 export type ApiError<T> = {
