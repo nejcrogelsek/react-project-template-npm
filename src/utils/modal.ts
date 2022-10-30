@@ -15,7 +15,7 @@ export const openSuccessModal = () => {
     payload: {
       type: ModalType.SUCCESS,
       disableBackdropClose: false,
-      title: 'Your location was deleted',
+      title: 'Title here',
       confirmationData: {
         onConfirm: handleModalCancel,
         onConfirmText: 'Close',
@@ -44,9 +44,9 @@ export const openConfirmationModal = (handleConfirm?: () => void, handleCancel?:
     payload: {
       type: ModalType.CONFIRMATION,
       disableBackdropClose: false,
-      title: 'Are you sure?',
+      title: 'Title here',
       confirmationData: {
-        text: 'This location will be deleted. There is no undo of this action.',
+        text: 'Text here',
         onCancel: handleConfirm ?? handleModalCancel,
         onCancelText: 'Cancel',
         onConfirm: handleCancel ?? handleModalConfirm,
@@ -143,9 +143,9 @@ export const openUpdateSuccessModal = () => {
     payload: {
       type: ModalType.SUCCESS,
       disableBackdropClose: false,
-      title: 'Information changed.',
+      title: 'Title here',
       confirmationData: {
-        text: 'Your settings are saved.',
+        text: 'Text here',
         onConfirm: handleModalCancel,
         onConfirmText: 'Close',
       },

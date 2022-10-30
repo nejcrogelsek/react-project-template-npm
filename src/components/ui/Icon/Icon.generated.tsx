@@ -11,10 +11,21 @@ import React from 'react'
 /**
  * A list of all available icons in the icon set.
  */
-export type IconDefinition = 'arrow-right' | 'close' | 'eye-slash' | 'eye' | 'home' | 'lock' | 'menu' | 'plus'
+export type IconDefinition =
+  | 'arrow-right'
+  | 'check'
+  | 'close'
+  | 'eye-slash'
+  | 'eye'
+  | 'home'
+  | 'lock'
+  | 'menu'
+  | 'plus'
+  | 'user'
 
 export const availableIcons: IconDefinition[] = [
   'arrow-right',
+  'check',
   'close',
   'eye-slash',
   'eye',
@@ -22,6 +33,7 @@ export const availableIcons: IconDefinition[] = [
   'lock',
   'menu',
   'plus',
+  'user',
 ]
 
 export const IconSvg = {
@@ -31,6 +43,11 @@ export const IconSvg = {
         fill="#000"
         d="M2.092 15.998a1.14 1.14 0 01-.878-1.87l5.11-6.112-4.927-6.124a1.14 1.14 0 01.17-1.608 1.14 1.14 0 011.666.171L8.74 7.297a1.14 1.14 0 010 1.448l-5.702 6.842a1.14 1.14 0 01-.947.41z"
       />
+    </svg>
+  ),
+  check: (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-check" viewBox="0 0 16 16">
+      <path d="M10.97 4.97a.75.75 0 011.07 1.05l-3.99 4.99a.75.75 0 01-1.08.02L4.324 8.384a.75.75 0 111.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 01.02-.022z" />
     </svg>
   ),
   close: (
@@ -71,6 +88,16 @@ export const IconSvg = {
   plus: (
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
       <path d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
+    </svg>
+  ),
+  user: (
+    <svg
+      aria-hidden="true"
+      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-10mi8st-MuiSvgIcon-root-MuiAvatar-fallback"
+      data-testid="PersonIcon"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
     </svg>
   ),
 }

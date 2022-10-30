@@ -35,7 +35,7 @@ const UpdateUserForm: FC = () => {
   })
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form role='form' onSubmit={onSubmit}>
       <FormGroup>
         <Label htmlFor="email">Email</Label>
         <Input type="email" id="email" register={register} placeholder="" />
@@ -71,11 +71,11 @@ const UpdateUserForm: FC = () => {
       </Row>
       <Row direction="row" style={{ marginTop: '1rem' }}>
         <Col size={0} margin={{ right: '1rem' }}>
-          <Button texttransform="uppercase" type="submit">
+          <Button texttransform="uppercase" type="submit" aria-label="Update user">
             Submit
           </Button>
         </Col>
-        <Button className="link" type="button" onClick={handleModalCancel}>
+        <Button className="link" type="button" onClick={handleModalCancel} aria-label="Cancel update user">
           Cancel
         </Button>
       </Row>

@@ -31,9 +31,9 @@ const PasswordInput: FC<Props> = ({ register, id, label }: Props) => {
         <Label htmlFor={id}>{label}</Label>
         <InputRef ref={passwordInput} type="password" id={id} register={register} placeholder="" />
         {hidePassword ? (
-          <Icon icon="eye-slash" onClick={handleHidePassword} />
+          <Icon aria-label="show-hide_icon" icon="eye-slash" onClick={handleHidePassword} />
         ) : (
-          <Icon icon="eye" onClick={handleHidePassword} />
+          <Icon aria-label="show-hide_icon" icon="eye" onClick={handleHidePassword} />
         )}
       </>
     )
@@ -44,9 +44,9 @@ const PasswordInput: FC<Props> = ({ register, id, label }: Props) => {
       <Label htmlFor={id}>{label}</Label>
       <InputRef ref={passwordInput} type="password" id={id} placeholder="" />
       {hidePassword ? (
-        <Icon icon="eye-slash" onClick={handleHidePassword} />
+        <Icon aria-label="show-hide_icon" icon="eye-slash" onClick={handleHidePassword} />
       ) : (
-        <Icon icon="eye" onClick={handleHidePassword} />
+        <Icon aria-label="show-hide_icon" icon="eye" onClick={handleHidePassword} />
       )}
     </>
   )

@@ -30,7 +30,7 @@ const ResetPasswordForm: FC = () => {
   })
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form role='form' onSubmit={onSubmit}>
       <FormGroup className="">
         <PasswordInput id="password" register={register} label="Password" />
         {errors.password && <FormFeedback>{errors.password.message}</FormFeedback>}

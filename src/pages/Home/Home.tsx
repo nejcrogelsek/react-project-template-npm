@@ -1,9 +1,8 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { H1 } from 'styles'
 
 const Home: FC = () => {
-  
   return (
     <div className="home">
       <H1>Home component</H1>

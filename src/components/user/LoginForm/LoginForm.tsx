@@ -38,7 +38,7 @@ const LoginForm: FC = () => {
   }, [])
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form role="form" onSubmit={onSubmit}>
       <FormGroup>
         <Label htmlFor="email">Email</Label>
         <Input type="email" id="email" placeholder="example@gmail.com" register={register} />

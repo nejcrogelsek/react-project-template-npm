@@ -1,6 +1,6 @@
-import { Avatar } from '@mui/material'
 import * as API from 'api/Api'
 import { Button, Input, Link, PasswordInput } from 'components/ui'
+import Avatar from 'components/ui/Avatar/Avatar'
 import { fileSelected } from 'lib/helpers/fileSelected'
 import { useRegisterForm } from 'lib/hooks/react-hook-form/useRegisterForm'
 import globalStore from 'lib/stores/global.store'
@@ -17,6 +17,7 @@ const RegisterForm: FC = () => {
 
   const onSubmit = handleSubmit(async (dataset) => {
     if (file) {
+      console.log(dataset)
       globalStore.setGlobalLoading({ payload: true })
       const { url }: API.UrlResponse = await API.generateUploadUrl()
       await API.uploadImage(url, file)
@@ -60,7 +61,7 @@ const RegisterForm: FC = () => {
   }, [file])
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form role="form" onSubmit={onSubmit}>
       <FormGroup className="avatar">
         <Label htmlFor="file">
           <Avatar
@@ -68,7 +69,14 @@ const RegisterForm: FC = () => {
             src={preview as string}
           />
         </Label>
-        <Input id="avatar-upload" type="file" accept="image/*" name="file" onChange={(e) => fileSelected(e, setFile)} />
+        <Input
+          id="avatar-upload"
+          type="file"
+          accept="image/*"
+          aria-label="upload avatar"
+          name="file"
+          onChange={(e) => fileSelected(e, setFile)}
+        />
       </FormGroup>
       <FormGroup>
         <Label htmlFor="email">Email</Label>

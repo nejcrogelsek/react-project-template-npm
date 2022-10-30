@@ -12,7 +12,7 @@ export enum RouteType {
   RESTRICTED,
 }
 
-interface AppRoute extends RouteProps {
+type AppRoute = RouteProps & {
   type?: RouteType
 }
 
